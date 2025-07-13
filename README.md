@@ -45,14 +45,21 @@ This device shows the **UV Index** using an **SH1106 0.42" OLED display** and an
 
 The main design goal was to make the device as compact as possible with the available components.
 
-- **Battery** was wired and glued to the **TP4057** charging board. The **charging board** was then connected to the **ESP32-C3**.  
-  ![uvgadget1](https://github.com/user-attachments/assets/b31ecdce-aa35-4fbe-844d-d8744b999166)
+- **Battery** was wired and glued to the **TP4057** charging board. The **charging board** was then connected to the **ESP32-C3**.
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/b31ecdce-aa35-4fbe-844d-d8744b999166" width="400" />
+</div>
 
-- The **LTR390** sensor was added last, creating a "component sandwich". Internal layers (left to right): ESP32-C3 (with OLED), LiPo, TP4057, LTR390 
-  ![uvgadget2](https://github.com/user-attachments/assets/3998c0fd-234f-4737-a307-e24a6322437f)
 
-- Fully wired setup including the switch  
-  ![UvGadget3](https://github.com/user-attachments/assets/cf8d8a73-d18e-4afc-ab4e-d37161c5c31d)
+- The **LTR390** sensor was added last, creating a "component sandwich". Internal layers (left to right): ESP32-C3 (with OLED), LiPo, TP4057, LTR390
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/3998c0fd-234f-4737-a307-e24a6322437f" width="400" />
+</div>
+
+- Fully wired setup including the switch
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/cf8d8a73-d18e-4afc-ab4e-d37161c5c31d" width="400" />
+</div>
 
 ---
 
@@ -71,8 +78,12 @@ The **top casing** has:
 
 **Casing and Mechanism Photos:**
 
-- Before gluing the switch and top part:  
-  ![before_glue](https://github.com/user-attachments/assets/5cb7619c-39e4-4fff-b7e4-b3b80127f85b)
+- Before gluing the switch and top part:
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/5cb7619c-39e4-4fff-b7e4-b3b80127f85b" width="400" />
+</div> 
 
-- Final product:  
-  ![finished](https://github.com/user-attachments/assets/18ee3ece-228a-4aa6-b71f-a9027146f49d)
+- Final product:
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/18ee3ece-228a-4aa6-b71f-a9027146f49d" width="400" />
+</div>
