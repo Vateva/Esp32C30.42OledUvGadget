@@ -1,37 +1,112 @@
 #include <Wire.h>
 #include <U8g2lib.h>
+#include "Adafruit_LTR390.h"
+#include "icon_bitmaps.h" 
 
-// Create display object for SH1106 with correct resolution and offset
-// Use 128x64 in library but only draw in 72x40 area
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
+Adafruit_LTR390 ltr = Adafruit_LTR390();
+
+void displayUVIndex(float uv_index);
+void displayError(const char* message);
+
+// variables for alternating display
+unsigned long previousMillis = 0;
+const long interval = 2000; // 0.7 seconds
+bool showUV = true;
+float last_uv_index = 0.0; // to store the last read UV index for continuous display
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting AbroRobot ESP32-C3 OLED test...");
   
-  // Initialize I2C with correct pins for AbroRobot board
+  // initialize I2C for both OLED and LTR390
   Wire.begin(5, 6); // SDA=GPIO5, SCL=GPIO6
   
   // Initialize display
   u8g2.begin();
   
-  // Set display offset for proper rendering
-  u8g2.setDisplayRotation(U8G2_R0);
+  // itialize UV sensor
+  if (!ltr.begin()) {
+    displayError("Sensor Error!");
+    return;
+  }
   
-  Serial.println("OLED initialized successfully!");
+  // configure sensor for optimal UV reading
+  ltr.setMode(LTR390_MODE_UVS);
+  ltr.setGain(LTR390_GAIN_18);
+  ltr.setResolution(LTR390_RESOLUTION_20BIT);
   
-  // Clear the display
-  u8g2.clearBuffer();
+  // wait for first reading
+  while (!ltr.newDataAvailable()) {
+    delay(10);
+  }
+  
+  // Take initial reading
+  uint32_t uv_raw = ltr.readUVS();
+  last_uv_index = uv_raw / 2300.0; // store the initial UV index
 
-  
-  // Draw a border to show the usable area
-  u8g2.drawFrame(26, 24, 72, 40);
-
-  // Send buffer to display
-  u8g2.sendBuffer();
+  previousMillis = millis();
   
 }
 
 void loop() {
+  displayUVIndex(last_uv_index);
+  delay(10); 
+}
 
+void displayUVIndex(float uv_index) {
+  u8g2.clearBuffer();
+  
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    showUV = !showUV; // toggle between showing UV index and bitmap
+  }
+
+  if (showUV) {
+    // display UV Index
+    u8g2.setFont(u8g2_font_ncenB14_tr);
+    u8g2.setCursor(30, 45);
+    u8g2.print("UV:");
+    u8g2.print(uv_index, 1);
+    u8g2.setFont(u8g2_font_6x10_tr);
+    u8g2.setCursor(32, 58);
+    u8g2.print("Index");
+
+    
+  } else {
+    const unsigned char* currentBitmap = nullptr; // initialize with a null pointer
+
+
+    if (uv_index >= 0.1 && uv_index <= 2.9) {
+      currentBitmap = icons_smiley; 
+    } else if (uv_index >= 3.0 && uv_index <= 5.9) {
+      currentBitmap = icons_sunglasses; 
+    } else if (uv_index >= 6.0 && uv_index <= 7.9) {
+      currentBitmap = icons_fire; 
+    } else if (uv_index >= 8.0 && uv_index <= 10.9) {
+      currentBitmap = icons_demon; 
+    } else if (uv_index >= 11.0) {
+      currentBitmap = icons_skull; 
+    }else{
+      currentBitmap = icons_moon; 
+    }
+
+if (currentBitmap != nullptr) {
+      // center the 40x40 bitmap in the 72x40 active area(offsets are 26 and 24)
+      int x = 26 + (72 - ICON_WIDTH) / 2;
+      int y = 24 + (40 - ICON_HEIGHT) / 2;
+      u8g2.drawXBMP(x, y, ICON_WIDTH, ICON_HEIGHT, currentBitmap);
+    }
+  }
+
+  u8g2.sendBuffer(); // Send the buffer to the display
+}
+
+void displayError(const char* message) {
+  u8g2.clearBuffer();
+  u8g2.setFont(u8g2_font_6x10_tr);
+  u8g2.setCursor(30, 45);
+  u8g2.print(message);
+  u8g2.sendBuffer();
 }
