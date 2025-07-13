@@ -76,14 +76,14 @@ The **bottom casing** is a simple **rectangular prism**:
 The **top casing** has:
 - A small mechanism that **Reveals or hides** the UV sensor and **Toggles the switch** to power the device on or off.
 
-**Casing and Mechanism Photos:**
 
-- Before gluing the switch and top part:
-<div align="center">
-    <img src="https://github.com/user-attachments/assets/5cb7619c-39e4-4fff-b7e4-b3b80127f85b" width="400" />
-</div> 
+### Casing and final product videos
 
-- Final product:
-<div align="center">
-    <img src="https://github.com/user-attachments/assets/18ee3ece-228a-4aa6-b71f-a9027146f49d" width="400" />
-</div>
+#### Top casing mechanism:
+[final product](https://github.com/user-attachments/assets/5cb7619c-39e4-4fff-b7e4-b3b80127f85b)
+
+#### Before gluing the switch and top part:
+[before gluing](https://github.com/user-attachments/assets/f7effbdd-9a6e-4c83-83e7-3005d72662a8)
+
+#### Final product:
+[final product](https://github.com/user-attachments/assets/18ee3ece-228a-4aa6-b71f-a9027146f49d)
