@@ -39,10 +39,11 @@ void setup() {
   while (!ltr.newDataAvailable()) {
     delay(10);
   }
-  
+  delay(1000);// wait 1 second before takign initii tual reading
   // Take initial reading
   uint32_t uv_raw = ltr.readUVS();
   last_uv_index = uv_raw / 2300.0; // store the initial UV index
+  last_uv_index = round(last_uv_index * 10.0) / 10.0; // round to 1 decimal place
 
   previousMillis = millis();
   
