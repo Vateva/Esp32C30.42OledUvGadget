@@ -43,7 +43,6 @@ void setup() {
   // Take initial reading
   uint32_t uv_raw = ltr.readUVS();
   last_uv_index = uv_raw / 2300.0; // store the initial UV index
-  last_uv_index = round(last_uv_index * 10.0) / 10.0; // round to 1 decimal place
 
   previousMillis = millis();
   
@@ -79,13 +78,13 @@ void displayUVIndex(float uv_index) {
     const unsigned char* currentBitmap = nullptr; // initialize with a null pointer
 
 
-    if (uv_index >= 0.1 && uv_index <= 2.9) {
+    if (uv_index > 0 && uv_index < 3) {
       currentBitmap = icons_smiley; 
-    } else if (uv_index >= 3.0 && uv_index <= 5.9) {
+    } else if (uv_index >= 3.0 && uv_index < 6) {
       currentBitmap = icons_sunglasses; 
-    } else if (uv_index >= 6.0 && uv_index <= 7.9) {
+    } else if (uv_index >= 6.0 && uv_index < 8) {
       currentBitmap = icons_fire; 
-    } else if (uv_index >= 8.0 && uv_index <= 10.9) {
+    } else if (uv_index >= 8.0 && uv_index < 11) {
       currentBitmap = icons_demon; 
     } else if (uv_index >= 11.0) {
       currentBitmap = icons_skull; 
